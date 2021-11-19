@@ -9,7 +9,7 @@
 
 # Ignore db creds / settings
 /config/database.yml
-brainwash-ify-ology-api/config/database_copy.yml
+/config/database_copy_2.yml
 
 # Ignore the default SQLite database.
 /db/*.sqlite3
