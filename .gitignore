@@ -7,6 +7,10 @@
 # Ignore bundler config.
 /.bundle
 
+# Ignore db creds / settings
+/config/database.yml
+brainwash-ify-ology-api/config/database_copy.yml
+
 # Ignore the default SQLite database.
 /db/*.sqlite3
 /db/*.sqlite3-*
@@ -29,6 +33,3 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
-
-# Ignore db creds / settings
-/config/database.yml
