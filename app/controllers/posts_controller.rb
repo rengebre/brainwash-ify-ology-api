@@ -1,7 +1,13 @@
 class PostsController < ApplicationController
+  def index
+    @posts = Post.all
+
+    puts @posts.inspect
+
+    render :json => @posts.to_json 
+  end
+
   def create
-    puts "we pinged"
-    puts "here + #{params}"
     @post = Post.new(post_params)
 
     @post.save
@@ -10,6 +16,7 @@ class PostsController < ApplicationController
       payload = {
         success: 'much'
       }
+
       render :json => payload, :status => 200
     else 
       render :json => {error: "you baaaad"}, :status => 400
