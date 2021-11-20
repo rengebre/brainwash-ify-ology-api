@@ -2,9 +2,7 @@ class PostsController < ApplicationController
   def index
     @posts = Post.all
 
-    puts @posts.inspect
-
-    render :json => @posts.to_json 
+    render :json => @posts
   end
 
   def create
@@ -13,9 +11,9 @@ class PostsController < ApplicationController
     @post.save
 
     if @post 
-      payload = {
+      payload = "{
         success: 'much'
-      }
+      }"
 
       render :json => payload, :status => 200
     else 
