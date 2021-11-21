@@ -1,3 +1,4 @@
 class Interest < ApplicationRecord
-  has_many :user_interests, :posts
+  has_many :user_interests
+  has_many :posts
 end
