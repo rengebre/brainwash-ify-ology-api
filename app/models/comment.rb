@@ -1,3 +1,4 @@
 class Comment < ApplicationRecord
-  belongs_to :users, :posts
+  belongs_to :users
+  belongs_to :posts
 end
