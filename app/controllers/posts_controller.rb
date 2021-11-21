@@ -6,9 +6,20 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = Post.new(post_params)
+    puts "HEYYYYYY #{post_params}"
 
-    save_flag = @post.save
+    interest_id = Interest.where(name: post_params["interest_name"])[0].id
+   
+    # puts interest_id
+    post_parameters = {:user_id => 1, :title => post_params["title"], :description => post_params["description"], :interest_id => interest_id, :post_type => post_params["post_type"]}
+
+    @post = Post.new(post_parameters)
+
+    
+    save_flag = true
+    @post.save!
+    
+    puts @post.inspect
 
     if save_flag
       payload = "{
@@ -30,6 +41,7 @@ class PostsController < ApplicationController
 
   private
   def post_params
-    params.require(:post).permit(:title, :description)
+    
+    params.require(:post).permit(:title, :description, :post_type, :interest_name)
   end
 end
