@@ -8,9 +8,9 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
 
-    @post.save
+    save_flag = @post.save
 
-    if @post 
+    if save_flag
       payload = "{
         success: 'much'
       }"
