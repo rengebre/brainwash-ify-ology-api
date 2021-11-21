@@ -1,6 +1,6 @@
 class Post < ApplicationRecord
-  belongs_to :users
-  belongs_to :interests
+  belongs_to :user
+  belongs_to :interest
   has_many :likes
   has_many :comments
 end

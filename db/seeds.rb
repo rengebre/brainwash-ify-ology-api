@@ -6,6 +6,8 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+####### USERS #######
+
 user_list = [
   {
     email: "russell@email.com",
@@ -33,11 +35,152 @@ user_list = [
   }
 ]
 
-User.destroy_all
+# User.destroy_all
 
 user_list.each {|user|
   User.create!(user)
 }
 
+####### INTERESTS #######
 
+interest_list = [
+  {
+    name: 'Cooking'
+  },
+  {
+    name: 'Home Improvements'
+  },
+  {
+    name: 'Gardening'
+  }
+]
 
+# Interest.destroy_all
+
+interest_list.each { |interest| Interest.create!(interest) }
+
+####### USER_INTERESTS #######
+
+user_interest_list = [
+  {
+    user_id: 1,
+    interest_id: 1
+  },
+  {
+    user_id: 2,
+    interest_id: 2
+  },
+  {
+    user_id: 3,
+    interest_id: 3
+  },
+  {
+    user_id: 1,
+    interest_id: 3
+  },
+  {
+    user_id: 2,
+    interest_id: 2
+  },
+  {
+    user_id: 3,
+    interest_id: 1
+  }
+]
+
+# UserInterest.destroy_all
+
+user_interest_list.each { |user_interest| UserInterest.create!(user_interest) }
+
+####### POSTS #######
+
+post_list = [
+  {
+    title: "How to cook a sweet potato",
+    description: "Watch me cook this huge sweet potato, she is so sweet",
+    upload_file: "test.mov",
+    post_type: "video",
+    user_id: 1,
+    interest_id: 1
+  },
+  {
+    title: "How to tear out your nasty carpets",
+    description: "Let me walk you through the best way to rip out your old carpets to reveal the beautiful hardwood",
+    upload_file: "test.mov",
+    post_type: "video",
+    user_id: 2,
+    interest_id: 2
+  },
+  {
+    title: "How to revive an aloe plant",
+    description: "Everything you need to know about keeping your precious aloe bbs alive and juicy",
+    upload_file: "test.mov",
+    post_type: "video",
+    user_id: 3,
+    interest_id: 3
+  }
+]
+
+# # Posts.destroy_all
+
+post_list.each { |post| Post.create!(post) }
+
+###### LIKES ######
+
+likes_list = [
+  {
+    user_id: 1,
+    post_id: 2
+  },
+  {
+    user_id: 2,
+    post_id: 3
+  },
+  {
+    user_id: 3,
+    post_id: 1
+  }
+]
+
+likes_list.each { |like| Like.create!(like)}
+
+###### COMMENTS ######
+
+comments_list = [
+  {
+    content: 'love this vid, thanks for sharing!!',
+    user_id: 1,
+    post_id: 2
+  },
+  {
+    content: 'learned so much, vid was sweeeet',
+    user_id: 2,
+    post_id: 3
+  },
+  {
+    content: '5 stars, would watch again!',
+    user_id: 3,
+    post_id: 1
+  }
+]
+
+comments_list.each { |comment| Comment.create!(comment) }
+
+###### FOLLOWS ######
+
+follows_list = [
+  {
+    followed_id: 1,
+    follower_id: 2
+  },
+  {
+    followed_id: 2,
+    follower_id: 3
+  },
+  {
+    followed_id: 3,
+    follower_id: 1
+  }
+]
+
+follows_list.each { |follow| Follow.create!(follow) }
