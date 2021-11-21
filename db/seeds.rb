@@ -24,7 +24,7 @@ user_list = [
     avatar: "/katie.png"
   },
   {
-    email: "sophie@email.com",\
+    email: "sophie@email.com",
     name: "Sophie Oliver",
     username: "sjoliver",
     bio: "gare af - you either scam today, or today scams you",
