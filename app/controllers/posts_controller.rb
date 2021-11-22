@@ -1,13 +1,7 @@
 class PostsController < ApplicationController
   def index
     @posts = Post.all
-    
-    @interests = @posts.map { |post| 
-      post.interest
-    }
-
-    @returnObj = {posts: @posts, interests: @interests}
-    render :json => @returnObj
+    render :json => @posts
   end
 
   def create
