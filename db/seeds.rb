@@ -98,7 +98,7 @@ post_list = [
   {
     title: "How to cook a sweet potato",
     description: "Watch me cook this huge sweet potato, she is so sweet",
-    upload_file: "test.mov",
+    upload_file: "https://video-images.vice.com/articles/5a4d3c2c195444648780c02a/lede/1515013133112-Screen-Shot-2018-01-03-at-35241-PM.png?crop=0.9197530864197531xw:1xh;center,center&resize=1200:*",
     post_type: "video",
     user_id: 1,
     interest_id: 1
@@ -106,7 +106,7 @@ post_list = [
   {
     title: "How to tear out your nasty carpets",
     description: "Let me walk you through the best way to rip out your old carpets to reveal the beautiful hardwood",
-    upload_file: "test.mov",
+    upload_file: "https://www.thespruce.com/thmb/suvSBIM8DxtFvsWYkOtB64BefuY=/1885x1414/smart/filters:no_upscale()/RemovingCarpet-6a4a6a6f78df40d8a11439e6a83ec866.jpg",
     post_type: "video",
     user_id: 2,
     interest_id: 2
@@ -114,7 +114,7 @@ post_list = [
   {
     title: "How to revive an aloe plant",
     description: "Everything you need to know about keeping your precious aloe bbs alive and juicy",
-    upload_file: "test.mov",
+    upload_file: "https://i.ytimg.com/vi/kHsQYCM_sQs/maxresdefault.jpg",
     post_type: "video",
     user_id: 3,
     interest_id: 3
