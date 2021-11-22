@@ -1,8 +1,13 @@
 class PostsController < ApplicationController
   def index
     @posts = Post.all
+    
+    @interests = @posts.map { |post| 
+      post.interest
+    }
 
-    render :json => @posts
+    @returnObj = {posts: @posts, interests: @interests}
+    render :json => @returnObj
   end
 
   def create
@@ -11,7 +16,14 @@ class PostsController < ApplicationController
     interest_id = Interest.where(name: post_params["interest_name"])[0].id
    
     # puts interest_id
-    post_parameters = {:user_id => 1, :title => post_params["title"], :description => post_params["description"], :interest_id => interest_id, :post_type => post_params["post_type"]}
+    post_parameters = {
+      :user_id => 1, 
+      :title => post_params["title"], 
+      :description => post_params["description"], 
+      :upload_file => post_params["upload_file"],
+      :interest_id => interest_id, 
+      :post_type => post_params["post_type"]
+    }
 
     @post = Post.new(post_parameters)
 
@@ -41,7 +53,6 @@ class PostsController < ApplicationController
 
   private
   def post_params
-    
-    params.require(:post).permit(:title, :description, :post_type, :interest_name)
+    params.require(:post).permit(:title, :description, :post_type, :interest_name, :upload_file)
   end
 end
