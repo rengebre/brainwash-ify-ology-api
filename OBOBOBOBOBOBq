@@ -1,7 +1,0 @@
- id |       email       |        name         | username |                         bio                         | active |    avatar    |         created_at         |         updated_at         
-----+-------------------+---------------------+----------+-----------------------------------------------------+--------+--------------+----------------------------+----------------------------
-  4 | russell@email.com | Russell Engebretson | rengebre | super dooper cool                                   | t      | /russell.png | 2021-11-21 01:50:15.931756 | 2021-11-21 01:50:15.931756
-  5 | katie@email.com   | Katie Herda         | kherds   | I like skittles                                     | t      | /katie.png   | 2021-11-21 01:50:15.93593  | 2021-11-21 01:50:15.93593
-  6 | sophie@email.com  | Sophie Oliver       | sjoliver | gare af - you either scam today, or today scams you | t      | /sophie.png  | 2021-11-21 01:50:15.939829 | 2021-11-21 01:50:15.939829
-(3 rows)
-
