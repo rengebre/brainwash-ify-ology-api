@@ -37,7 +37,6 @@ class PostsController < ApplicationController
 
     @post = Post.new(post_parameters)
 
-    
     save_flag = true
     @post.save!
     
@@ -62,7 +61,8 @@ class PostsController < ApplicationController
     # puts @comments.inspect
 
     #send the information to the front end
-    render :json => @comments
+    @returnObj = {comments: @comments, post: @post}
+    render :json => @returnObj
   end
   #########     #########
 
