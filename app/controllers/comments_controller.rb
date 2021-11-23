@@ -11,6 +11,7 @@ class CommentsController < ApplicationController
     @comment = Comment.new(comment_parameters)
     @comment.save!
 
+    render :json => @comment
   end
 
   def destroy
