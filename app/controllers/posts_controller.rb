@@ -44,6 +44,19 @@ class PostsController < ApplicationController
     end
   end
 
+  ##### NEW CODE ######
+  def show
+    #retrieve all comments for individual post
+    @post = Post.find(params[:id])
+    @comments = @post.comments
+    # puts @comments.inspect
+
+    #send the information to the front end
+    render :json => @comments
+  end
+  #########     #########
+
+
   def destroy 
     @post = Post.find(params[:id])
     @post.destroy
