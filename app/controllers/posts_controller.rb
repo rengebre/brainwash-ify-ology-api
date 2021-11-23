@@ -1,7 +1,23 @@
 class PostsController < ApplicationController
   def index
     @posts = Post.all
-    render :json => @posts
+    @users = @posts.map { |post| post.user}
+    # return_post = {}
+
+    # @posts.each {|post|
+    #   return_post[post.id] = {
+    #     :post => post,
+    #     :user => post.user
+    #   }
+    # }
+
+    # puts return_post
+
+    # puts @users.inspect
+
+    @returnObj = { posts: @posts, users: @users }
+
+    render :json => @returnObj
   end
 
   def create
