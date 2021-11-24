@@ -60,9 +60,9 @@ class PostsController < ApplicationController
     @comments = @post.comments.order(updated_at: :desc)
 
     #sents us like count for given post
-    @likes = @post.likes.count()
+    @likes = @post.likes
 
-    @returnObj = {comments: @comments, post: @post, likeCount: @likes}
+    @returnObj = {comments: @comments, post: @post, likes: @likes}
     render :json => @returnObj
   end
 
