@@ -57,7 +57,7 @@ class PostsController < ApplicationController
   def show
     #retrieve all comments for individual post
     @post = Post.find(params[:id])
-    @comments = @post.comments.all.order(updated_at: :desc)
+    @comments = @post.comments.order(updated_at: :desc)
 
     # puts @comments.inspect
 
