@@ -1,11 +1,12 @@
 class PostsController < ApplicationController
   def index
-
-    # if params[:filter] 
+    if params[:filter]
+      @interestId = params[:filter].map {|obj| JSON.parse(obj)["value"]}
+      
+      @posts = Post.where('interest_id IN (?)', @interestId)
+    else 
       @posts = Post.all.order(updated_at: :desc)
-      # else 
-      #   @posts = Post.where
-      # end
+    end
     
     @users = @posts.map { |post| post.user}  
     @returnObj = { posts: @posts, users: @users }
@@ -49,7 +50,7 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
     @comments = @post.comments.order(updated_at: :desc)
 
-    #sents us like count for given post
+    #sends us like count for given post
     @likes = @post.likes
 
     @returnObj = {comments: @comments, post: @post, likes: @likes}
