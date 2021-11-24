@@ -54,7 +54,6 @@ class PostsController < ApplicationController
 
     @userName = @post.user.username
     
-
     @returnObj = {comments: @comments, post: @post, likes: @likes, userName: @userName}
     render :json => @returnObj
   end
