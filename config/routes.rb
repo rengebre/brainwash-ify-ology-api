@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   resources :posts
   resources :interests, only: [:index]
   resources :comments, only: [:create, :destroy]
+  resources :users, only: [:index, :create, :show]
 end

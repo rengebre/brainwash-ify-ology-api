@@ -15,7 +15,8 @@ user_list = [
     username: "rengebre",
     bio: "super dooper cool",
     active: true,
-    avatar: "/russell.png"
+    avatar: "/russell.png",
+    social_id: "google-oauth2|114665092879259846710"
   },
   {
     email: "katie@email.com",
@@ -23,7 +24,8 @@ user_list = [
     username: "kherds",
     bio: "I like skittles",
     active: true,
-    avatar: "/katie.png"
+    avatar: "/katie.png",
+    social_id: "google-oauth2|114665092878259846710"
   },
   {
     email: "sophie@email.com",
@@ -31,7 +33,8 @@ user_list = [
     username: "sjoliver",
     bio: "gare af - you either scam today, or today scams you",
     active: true,
-    avatar: "/sophie.png"
+    avatar: "/sophie.png",
+    social_id: "google-oauth2|114664092879259846710"
   }
 ]
 
