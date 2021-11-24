@@ -1,27 +1,19 @@
 class PostsController < ApplicationController
   def index
-    @posts = Post.all.order(updated_at: :desc)
-    @users = @posts.map { |post| post.user}
-    # return_post = {}
 
-    # @posts.each {|post|
-    #   return_post[post.id] = {
-    #     :post => post,
-    #     :user => post.user
-    #   }
-    # }
-
-    # puts return_post
-
-    # puts @users.inspect
-
+    # if params[:filter] 
+      @posts = Post.all.order(updated_at: :desc)
+      # else 
+      #   @posts = Post.where
+      # end
+    
+    @users = @posts.map { |post| post.user}  
     @returnObj = { posts: @posts, users: @users }
 
     render :json => @returnObj
   end
 
   def create
-    puts "HEYYYYYY #{post_params}"
 
     interest_id = Interest.where(name: post_params["interest_name"])[0].id
    
@@ -39,8 +31,6 @@ class PostsController < ApplicationController
 
     save_flag = true
     @post.save!
-    
-    puts @post.inspect
 
     if save_flag
       payload = "{
