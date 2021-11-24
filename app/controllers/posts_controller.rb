@@ -53,19 +53,19 @@ class PostsController < ApplicationController
     end
   end
 
-  ##### NEW CODE ######
+
   def show
     #retrieve all comments for individual post
     @post = Post.find(params[:id])
     @comments = @post.comments.order(updated_at: :desc)
 
-    # puts @comments.inspect
+    #sents us like count for given post
+    @likes = @post.likes.count()
 
-    #send the information to the front end
-    @returnObj = {comments: @comments, post: @post}
+    @returnObj = {comments: @comments, post: @post, likeCount: @likes}
     render :json => @returnObj
   end
-  #########     #########
+
 
 
   def destroy 
