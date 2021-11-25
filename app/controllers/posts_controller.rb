@@ -53,7 +53,9 @@ class PostsController < ApplicationController
     #sends us like count for given post
     @likes = @post.likes
 
-    @returnObj = {comments: @comments, post: @post, likes: @likes}
+    @userName = @post.user.username
+    
+    @returnObj = {comments: @comments, post: @post, likes: @likes, userName: @userName}
     render :json => @returnObj
   end
 
