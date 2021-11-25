@@ -1,9 +1,29 @@
 class PostsController < ApplicationController
   def index
-    if params[:filter]
-      @interestId = params[:filter].map {|obj| JSON.parse(obj)["value"]}
-      
-      @posts = Post.where('interest_id IN (?)', @interestId)
+
+    filter = JSON.parse(params[:filter])
+
+    queryString = ""
+    queryArray = []
+
+    if filter["user_id"]
+      queryString += "user_id = ?"
+      queryArray.push filter["user_id"]
+    end
+    
+    if !filter["interests"].empty?
+      if !queryString.empty?
+        queryString += " AND "
+      end
+      queryString += "interest_id IN (?)"
+      @interestId = filter["interests"].map {|obj| obj["value"]}
+      queryArray.push @interestId
+    end
+
+    queryArray.unshift queryString
+
+    if queryArray.length > 1
+      @posts = Post.where(queryArray)
     else 
       @posts = Post.all.order(updated_at: :desc)
     end
