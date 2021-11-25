@@ -41,31 +41,33 @@ class PostsController < ApplicationController
 
   def create
 
-    interest_id = Interest.where(name: post_params["interest_name"])[0].id
+    # interest_id = Interest.where(name: post_params["interest_name"])[0].id
    
-    post_parameters = {
-      :user_id => post_params["user_id"], 
-      :title => post_params["title"], 
-      :description => post_params["description"], 
-      :upload_file => post_params["upload_file"],
-      :interest_id => interest_id, 
-      :post_type => post_params["post_type"]
-    }
+    # post_parameters = {
+    #   :user_id => post_params["user_id"], 
+    #   :title => post_params["title"], 
+    #   :description => post_params["description"], 
+    #   :upload_file => post_params["upload_file"],
+    #   :interest_id => interest_id, 
+    #   :post_type => post_params["post_type"]
+    # }
 
-    @post = Post.new(post_parameters)
+    # @post = Post.new(post_parameters)
 
-    save_flag = true
-    @post.save!
+    # save_flag = true
+    # @post.save!
 
-    if save_flag
-      payload = "{
-        success: 'much'
-      }"
+    puts "params ****** #{params}"
 
-      render :json => payload, :status => 200
-    else 
-      render :json => {error: "you baaaad"}, :status => 400
-    end
+    # if save_flag
+    #   payload = "{
+    #     success: 'much'
+    #   }"
+    render :json => { hello: "heyyyy" }
+    #   render :json => payload, :status => 200
+    # else 
+    #   render :json => {error: "you baaaad"}, :status => 400
+    # end
   end
 
 
