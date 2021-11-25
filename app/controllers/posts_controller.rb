@@ -7,9 +7,14 @@ class PostsController < ApplicationController
     else 
       @posts = Post.all.order(updated_at: :desc)
     end
-    
-    @users = @posts.map { |post| post.user}  
-    @returnObj = { posts: @posts, users: @users }
+
+    @postCounts = @posts.map { |post| 
+      {"#{post[:id]}": [post.likes.count, post.comments.count]}
+    }
+
+    @users = @posts.map { |post| post.user}
+
+    @returnObj = { posts: @posts, users: @users, postCounts: @postCounts }
 
     render :json => @returnObj
   end
