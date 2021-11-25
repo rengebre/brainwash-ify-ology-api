@@ -21,7 +21,7 @@ class PostsController < ApplicationController
     end
 
     queryArray.unshift queryString
-
+    
     if queryArray.length > 1
       @posts = Post.where(queryArray)
     else 
@@ -38,9 +38,8 @@ class PostsController < ApplicationController
 
     interest_id = Interest.where(name: post_params["interest_name"])[0].id
    
-    # puts interest_id
     post_parameters = {
-      :user_id => 1, 
+      :user_id => post_params["user_id"], 
       :title => post_params["title"], 
       :description => post_params["description"], 
       :upload_file => post_params["upload_file"],
@@ -90,6 +89,6 @@ class PostsController < ApplicationController
 
   private
   def post_params
-    params.require(:post).permit(:title, :description, :post_type, :interest_name, :upload_file)
+    params.require(:post).permit(:title, :description, :post_type, :interest_name, :upload_file, :user_id)
   end
 end
