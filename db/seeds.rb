@@ -26,12 +26,12 @@ user_list = [
     social_id: "google-oauth2|114665092878259846710"
   },
   {
-    email: "sophie@email.com",
+    email: "sophiejoliver19@gmail.com",
     name: "Sophie Oliver",
-    username: "sjoliver",
+    username: "sophiejoliver19",
     bio: "gare af - you either scam today, or today scams you",
-    avatar: "/sophie.png",
-    social_id: "google-oauth2|114664092879259846710"
+    avatar: "https://lh3.googleusercontent.com/a-/AOh14GhC2f6PLN3nzaEz3QbZ4XBxvqJiGi9t-Bi5SSXh=s96-c",
+    social_id: "google-oauth2|106129642574534830090"
   }
 ]
 
