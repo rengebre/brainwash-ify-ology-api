@@ -1,28 +1,20 @@
 class PostsController < ApplicationController
   def index
-    @posts = Post.all.order(updated_at: :desc)
-    @users = @posts.map { |post| post.user}
-
-    # return_post = {}
-
-    # @posts.each {|post|
-    #   return_post[post.id] = {
-    #     :post => post,
-    #     :user => post.user
-    #   }
-    # }
-
-    # puts return_post
-
-    # puts @users.inspect
-
+    if params[:filter]
+      @interestId = params[:filter].map {|obj| JSON.parse(obj)["value"]}
+      
+      @posts = Post.where('interest_id IN (?)', @interestId)
+    else 
+      @posts = Post.all.order(updated_at: :desc)
+    end
+    
+    @users = @posts.map { |post| post.user}  
     @returnObj = { posts: @posts, users: @users }
 
     render :json => @returnObj
   end
 
   def create
-    puts "HEYYYYYY #{post_params}"
 
     interest_id = Interest.where(name: post_params["interest_name"])[0].id
    
@@ -40,8 +32,6 @@ class PostsController < ApplicationController
 
     save_flag = true
     @post.save!
-    
-    puts @post.inspect
 
     if save_flag
       payload = "{
@@ -54,19 +44,21 @@ class PostsController < ApplicationController
     end
   end
 
-  ##### NEW CODE ######
+
   def show
     #retrieve all comments for individual post
     @post = Post.find(params[:id])
     @comments = @post.comments.order(updated_at: :desc)
 
-    # puts @comments.inspect
+    #sends us like count for given post
+    @likes = @post.likes
 
-    #send the information to the front end
-    @returnObj = {comments: @comments, post: @post}
+    @userName = @post.user.username
+    
+    @returnObj = {comments: @comments, post: @post, likes: @likes, userName: @userName}
     render :json => @returnObj
   end
-  #########     #########
+
 
 
   def destroy 
