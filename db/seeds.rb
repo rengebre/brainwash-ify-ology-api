@@ -19,13 +19,13 @@ user_list = [
     social_id: "google-oauth2|114665092879259846710"
   },
   {
-    email: "katie@email.com",
+    email: "katie.herda2@gmail.com",
     name: "Katie Herda",
-    username: "kherds",
+    username: "katie.herda2",
     bio: "I like skittles",
     active: true,
-    avatar: "/katie.png",
-    social_id: "google-oauth2|114665092878259846710"
+    avatar: "https://lh3.googleusercontent.com/a-/AOh14GhyUIB6h_-z3091w2VCK1WNlbVy6R8J8vge03cfvQ=s96-c",
+    social_id: "google-oauth2|111598822118906167947"
   },
   {
     email: "sophie@email.com",
