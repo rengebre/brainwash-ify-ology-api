@@ -23,7 +23,7 @@ class PostsController < ApplicationController
     queryArray.unshift queryString
     
     if queryArray.length > 1
-      @posts = Post.where(queryArray)
+      @posts = Post.where(queryArray).order(updated_at: :desc)
     else 
       @posts = Post.all.order(updated_at: :desc)
     end
