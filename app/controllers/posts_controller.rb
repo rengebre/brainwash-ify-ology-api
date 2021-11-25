@@ -1,9 +1,29 @@
 class PostsController < ApplicationController
   def index
-    if params[:filter]
-      @interestId = params[:filter].map {|obj| JSON.parse(obj)["value"]}
-      
-      @posts = Post.where('interest_id IN (?)', @interestId)
+
+    filter = JSON.parse(params[:filter])
+
+    queryString = ""
+    queryArray = []
+
+    if filter["user_id"]
+      queryString += "user_id = ?"
+      queryArray.push filter["user_id"]
+    end
+    
+    if !filter["interests"].empty?
+      if !queryString.empty?
+        queryString += " AND "
+      end
+      queryString += "interest_id IN (?)"
+      @interestId = filter["interests"].map {|obj| obj["value"]}
+      queryArray.push @interestId
+    end
+
+    queryArray.unshift queryString
+    
+    if queryArray.length > 1
+      @posts = Post.where(queryArray)
     else 
       @posts = Post.all.order(updated_at: :desc)
     end
@@ -23,9 +43,8 @@ class PostsController < ApplicationController
 
     interest_id = Interest.where(name: post_params["interest_name"])[0].id
    
-    # puts interest_id
     post_parameters = {
-      :user_id => 1, 
+      :user_id => post_params["user_id"], 
       :title => post_params["title"], 
       :description => post_params["description"], 
       :upload_file => post_params["upload_file"],
@@ -81,6 +100,6 @@ class PostsController < ApplicationController
 
   private
   def post_params
-    params.require(:post).permit(:title, :description, :post_type, :interest_name, :upload_file)
+    params.require(:post).permit(:title, :description, :post_type, :interest_name, :upload_file, :user_id)
   end
 end
