@@ -10,12 +10,11 @@
 
 user_list = [
   {
-    email: "russell@email.com",
-    name: "Russell Engebretson",
-    username: "rengebre",
+    email: "russell.engebretson@gmail.com",
+    name: "Russell E",
+    username: "russell.engebretson",
     bio: "super dooper cool",
-    active: true,
-    avatar: "/russell.png",
+    avatar: "https://lh3.googleusercontent.com/a-/AOh14Gj3fDPkuWQWWXIy9nO14V0UOxDnT9DP4I0zSftenA=s96-c",
     social_id: "google-oauth2|114665092879259846710"
   },
   {
@@ -23,7 +22,6 @@ user_list = [
     name: "Katie Herda",
     username: "kherds",
     bio: "I like skittles",
-    active: true,
     avatar: "/katie.png",
     social_id: "google-oauth2|114665092878259846710"
   },
@@ -32,7 +30,6 @@ user_list = [
     name: "Sophie Oliver",
     username: "sjoliver",
     bio: "gare af - you either scam today, or today scams you",
-    active: true,
     avatar: "/sophie.png",
     social_id: "google-oauth2|114664092879259846710"
   }
