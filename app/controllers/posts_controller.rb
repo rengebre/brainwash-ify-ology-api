@@ -57,6 +57,12 @@ class PostsController < ApplicationController
     # save_flag = true
     # @post.save!
 
+    # test_array = params.keys
+    # test_object = JSON.parse(test_array[0]);
+    # test_array.each {|key|
+    #   test_object = JSON.parse(key)
+    # }
+
     puts "params ****** #{params}"
 
     # if save_flag
