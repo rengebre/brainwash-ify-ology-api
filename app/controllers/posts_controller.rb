@@ -39,10 +39,7 @@ class PostsController < ApplicationController
     render :json => @returnObj
   end
 
-  def create
-
-    # interest_id = Interest.where(name: post_params["interest_name"])[0].id
-   
+  def create   
     # post_parameters = {
     #   :user_id => post_params["user_id"], 
     #   :title => post_params["title"], 
@@ -52,28 +49,20 @@ class PostsController < ApplicationController
     #   :post_type => post_params["post_type"]
     # }
 
-    # @post = Post.new(post_parameters)
+    @post = Post.new(post_params)
 
-    # save_flag = true
-    # @post.save!
+    # puts "params ****** #{post_params}"
 
-    # test_array = params.keys
-    # test_object = JSON.parse(test_array[0]);
-    # test_array.each {|key|
-    #   test_object = JSON.parse(key)
-    # }
-
-    puts "params ****** #{params}"
-
-    # if save_flag
-    #   payload = "{
-    #     success: 'much'
-    #   }"
-    render :json => { hello: "heyyyy" }
-    #   render :json => payload, :status => 200
-    # else 
-    #   render :json => {error: "you baaaad"}, :status => 400
-    # end
+    if @post.save!
+      payload = {
+        file: url_for(@post.upload_file)
+      }
+    # render :json => { hello: "heyyyy" }
+    puts "*******!!!!!***    #{@post.content_type}    *!**!*!*!*!*!*!*****!***!"
+      render :json => payload, :status => 200
+    else 
+      render :json => {error: "you baaaad"}, :status => 400
+    end
   end
 
 
@@ -108,6 +97,6 @@ class PostsController < ApplicationController
 
   private
   def post_params
-    params.require(:post).permit(:title, :description, :post_type, :interest_name, :upload_file, :user_id)
+    params.permit(:title, :description, :post_type, :interest_id, :upload_file, :user_id)
   end
 end
