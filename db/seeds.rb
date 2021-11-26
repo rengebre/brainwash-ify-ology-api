@@ -14,7 +14,7 @@ user_list = [
     name: "Russell E",
     username: "russell.engebretson",
     bio: "super dooper cool",
-    avatar: "https://lh3.googleusercontent.com/a-/AOh14Gj3fDPkuWQWWXIy9nO14V0UOxDnT9DP4I0zSftenA=s96-c",
+    social_img: "https://lh3.googleusercontent.com/a-/AOh14Gj3fDPkuWQWWXIy9nO14V0UOxDnT9DP4I0zSftenA=s96-c",
     social_id: "google-oauth2|114665092879259846710"
   },
   {
@@ -23,7 +23,7 @@ user_list = [
     username: "katie.herda2",
     bio: "I like skittles",
     active: true,
-    avatar: "https://lh3.googleusercontent.com/a-/AOh14GhyUIB6h_-z3091w2VCK1WNlbVy6R8J8vge03cfvQ=s96-c",
+    social_img: "https://lh3.googleusercontent.com/a-/AOh14GhyUIB6h_-z3091w2VCK1WNlbVy6R8J8vge03cfvQ=s96-c",
     social_id: "google-oauth2|111598822118906167947"
   },
   {
@@ -31,7 +31,7 @@ user_list = [
     name: "Sophie Oliver",
     username: "sophiejoliver19",
     bio: "gare af - you either scam today, or today scams you",
-    avatar: "https://lh3.googleusercontent.com/a-/AOh14GhC2f6PLN3nzaEz3QbZ4XBxvqJiGi9t-Bi5SSXh=s96-c",
+    social_img: "https://lh3.googleusercontent.com/a-/AOh14GhC2f6PLN3nzaEz3QbZ4XBxvqJiGi9t-Bi5SSXh=s96-c",
     social_id: "google-oauth2|106129642574534830090"
   }
 ]

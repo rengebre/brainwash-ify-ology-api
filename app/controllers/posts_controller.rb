@@ -44,7 +44,7 @@ class PostsController < ApplicationController
 
     if @post.save!
       payload = {
-        file: url_for(@post.upload_file)
+        file: url_for(@post.upload_file),
         content: @post.content_type
       }
     puts "*******!!!!!***    #{@post.content_type}    *!**!*!*!*!*!*!*****!***!"
