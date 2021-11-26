@@ -47,7 +47,6 @@ class PostsController < ApplicationController
         file: url_for(@post.upload_file),
         content: @post.content_type
       }
-    puts "*******!!!!!***    #{@post.content_type}    *!**!*!*!*!*!*!*****!***!"
       render :json => payload, :status => 200
     else 
       render :json => {error: "you baaaad"}, :status => 400
