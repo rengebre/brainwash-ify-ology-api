@@ -77,9 +77,23 @@ class PostsController < ApplicationController
 
     #sends us like count for given post
     @likes = @post.likes
-    @userName = @post.user.username
+    @userName = {
+      username: @post.user.username,
+      id: @post.user.id
+    }
+
+    @file = {
+      upload_file: "",
+      content: ""
+    }
+
+    if @post.upload_file.attached? 
+      @file["upload_file"] = url_for(@post.upload_file)
+      @file["content"] = @post.content_type_upload_file
+    end
+       
     
-    @returnObj = {comments: @comments, post: @post, likes: @likes, userName: @userName, commentUserInfo: @commentUserInfo}
+    @returnObj = {comments: @comments, post: @post, likes: @likes, userName: @userName, commentUserInfo: @commentUserInfo, file: @file}
     render :json => @returnObj
   end
 
