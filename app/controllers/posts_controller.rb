@@ -40,24 +40,13 @@ class PostsController < ApplicationController
   end
 
   def create   
-    # post_parameters = {
-    #   :user_id => post_params["user_id"], 
-    #   :title => post_params["title"], 
-    #   :description => post_params["description"], 
-    #   :upload_file => post_params["upload_file"],
-    #   :interest_id => interest_id, 
-    #   :post_type => post_params["post_type"]
-    # }
-
     @post = Post.new(post_params)
-
-    # puts "params ****** #{post_params}"
 
     if @post.save!
       payload = {
         file: url_for(@post.upload_file)
+        content: @post.content_type
       }
-    # render :json => { hello: "heyyyy" }
     puts "*******!!!!!***    #{@post.content_type}    *!**!*!*!*!*!*!*****!***!"
       render :json => payload, :status => 200
     else 
