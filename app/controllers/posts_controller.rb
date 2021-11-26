@@ -31,10 +31,17 @@ class PostsController < ApplicationController
     @postCounts = @posts.map { |post| 
       {"#{post[:id]}": [post.likes.count, post.comments.count]}
     }
-
+    
     @users = @posts.map { |post| post.user}
-
-    @returnObj = { posts: @posts, users: @users, postCounts: @postCounts }
+    
+    @thumbnails = {}
+    @posts.each { |post| 
+      if post.thumbnail.attached?
+        @thumbnails[post[:id]] = url_for(post&.thumbnail)
+      end
+    }
+    
+    @returnObj = { posts: @posts, users: @users, postCounts: @postCounts, thumbnails: @thumbnails }
 
     render :json => @returnObj
   end
@@ -45,7 +52,9 @@ class PostsController < ApplicationController
     if @post.save!
       payload = {
         file: url_for(@post.upload_file),
-        content: @post.content_type
+        content: @post.content_type_upload_file, 
+        thumbnail_file: url_for(@post.thumbnail),
+        thumbnail_content: @post.content_type_thumbnail
       }
       render :json => payload, :status => 200
     else 
@@ -85,6 +94,6 @@ class PostsController < ApplicationController
 
   private
   def post_params
-    params.permit(:title, :description, :post_type, :interest_id, :upload_file, :user_id)
+    params.permit(:title, :description, :post_type, :interest_id, :upload_file, :thumbnail, :user_id)
   end
 end

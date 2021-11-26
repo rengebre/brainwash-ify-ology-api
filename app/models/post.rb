@@ -4,8 +4,13 @@ class Post < ApplicationRecord
   has_many :likes
   has_many :comments
   has_one_attached :upload_file
+  has_one_attached :thumbnail
 
-  def content_type
+  def content_type_upload_file
     self.upload_file.blob.content_type
+  end
+
+  def content_type_thumbnail
+    self.thumbnail.blob.content_type
   end
 end
