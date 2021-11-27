@@ -31,37 +31,31 @@ class PostsController < ApplicationController
     @postCounts = @posts.map { |post| 
       {"#{post[:id]}": [post.likes.count, post.comments.count]}
     }
-
+    
     @users = @posts.map { |post| post.user}
-
-    @returnObj = { posts: @posts, users: @users, postCounts: @postCounts }
+    
+    @thumbnails = {}
+    @posts.each { |post| 
+      if post.thumbnail.attached?
+        @thumbnails[post[:id]] = url_for(post&.thumbnail)
+      end
+    }
+    
+    @returnObj = { posts: @posts, users: @users, postCounts: @postCounts, thumbnails: @thumbnails }
 
     render :json => @returnObj
   end
 
-  def create
+  def create   
+    @post = Post.new(post_params)
 
-    interest_id = Interest.where(name: post_params["interest_name"])[0].id
-   
-    post_parameters = {
-      :user_id => post_params["user_id"], 
-      :title => post_params["title"], 
-      :description => post_params["description"], 
-      :upload_file => post_params["upload_file"],
-      :interest_id => interest_id, 
-      :post_type => post_params["post_type"]
-    }
-
-    @post = Post.new(post_parameters)
-
-    save_flag = true
-    @post.save!
-
-    if save_flag
-      payload = "{
-        success: 'much'
-      }"
-
+    if @post.save!
+      payload = {
+        file: url_for(@post.upload_file),
+        content: @post.content_type_upload_file, 
+        thumbnail_file: url_for(@post.thumbnail),
+        thumbnail_content: @post.content_type_thumbnail
+      }
       render :json => payload, :status => 200
     else 
       render :json => {error: "you baaaad"}, :status => 400
@@ -74,19 +68,33 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
     @comments = @post.comments.order(updated_at: :desc)
 
-    @commentUserInfo = @comments.map { |comment| 
-      userInfo = User.where('id = ?', comment.user_id)
+    @commentInfo = @comments.map { |comment| 
+      userInfo = User.find(comment.user_id)
       {comment: comment, user: userInfo}
     }
-    puts "******", @commentUserInfo
-    # @commentsUserId = User.where("id = ?", @comment[user_id])
-
-    #sends us like count for given post
+ 
     @likes = @post.likes
-    @userName = @post.user.username
+
+    @postUserInfo = {
+      username: @post.user.username,
+      id: @post.user.id
+    }
+
+    @file = {
+      upload_file: "",
+      content: ""
+    }
+
+    if @post.upload_file.attached? 
+      @file["upload_file"] = url_for(@post.upload_file)
+      @file["content"] = @post.content_type_upload_file
+    end
+       
     
-    @returnObj = {comments: @comments, post: @post, likes: @likes, userName: @userName, commentUserInfo: @commentUserInfo}
+    @returnObj = {comments: @comments, post: @post, likes: @likes, postUserInfo: @postUserInfo, commentInfo: @commentInfo, file: @file}
     render :json => @returnObj
+
+
   end
 
 
@@ -100,6 +108,6 @@ class PostsController < ApplicationController
 
   private
   def post_params
-    params.require(:post).permit(:title, :description, :post_type, :interest_name, :upload_file, :user_id)
+    params.permit(:title, :description, :post_type, :interest_id, :upload_file, :thumbnail, :user_id)
   end
 end
