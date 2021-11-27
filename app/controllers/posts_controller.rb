@@ -68,15 +68,13 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
     @comments = @post.comments.order(updated_at: :desc)
 
-    @commentUserInfo = @comments.map { |comment| 
-      userInfo = User.where('id = ?', comment.user_id)
+    @commentInfo = @comments.map { |comment| 
+      userInfo = User.find(comment.user_id)
       {comment: comment, user: userInfo}
     }
-    puts "******", @commentUserInfo
-    # @commentsUserId = User.where("id = ?", @comment[user_id])
-
-    #sends us like count for given post
+ 
     @likes = @post.likes
+
     @userName = {
       username: @post.user.username,
       id: @post.user.id
@@ -93,8 +91,10 @@ class PostsController < ApplicationController
     end
        
     
-    @returnObj = {comments: @comments, post: @post, likes: @likes, userName: @userName, commentUserInfo: @commentUserInfo, file: @file}
+    @returnObj = {comments: @comments, post: @post, likes: @likes, userName: @userName, commentInfo: @commentInfo, file: @file}
     render :json => @returnObj
+
+    puts @returnObj
   end
 
 
