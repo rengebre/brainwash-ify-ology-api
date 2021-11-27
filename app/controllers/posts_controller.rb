@@ -75,7 +75,7 @@ class PostsController < ApplicationController
  
     @likes = @post.likes
 
-    @userName = {
+    @postUserInfo = {
       username: @post.user.username,
       id: @post.user.id
     }
@@ -91,10 +91,10 @@ class PostsController < ApplicationController
     end
        
     
-    @returnObj = {comments: @comments, post: @post, likes: @likes, userName: @userName, commentInfo: @commentInfo, file: @file}
+    @returnObj = {comments: @comments, post: @post, likes: @likes, postUserInfo: @postUserInfo, commentInfo: @commentInfo, file: @file}
     render :json => @returnObj
 
-    puts @returnObj
+
   end
 
 
