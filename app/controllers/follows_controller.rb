@@ -4,7 +4,7 @@ class FollowsController < ApplicationController
     
     @follow.save!
 
-    render :json => {success: "you did it"}, :status => 200
+    render :json => {follow_id: @follow.id}, :status => 200
   end
 
   def destroy
@@ -12,7 +12,7 @@ class FollowsController < ApplicationController
     @follow = Follow.find(params[:id])
     @follow.destroy
 
-    render :jsoon => {success: "she twas destroyed"}
+    render :json => {success: "she twas destroyed"}
   end
 
   private
