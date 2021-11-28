@@ -12,7 +12,7 @@ class FollowsController < ApplicationController
     @follow = Follow.find(params[:id])
     @follow.destroy
 
-    render :jsoon => {success: "she twas destroyed"}
+    render :json => {success: "she twas destroyed"}
   end
 
   private
