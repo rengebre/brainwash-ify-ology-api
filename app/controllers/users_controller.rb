@@ -69,6 +69,8 @@ class UsersController < ApplicationController
       update_params.delete("avatar")
     end
 
+    @user.update(update_params)
+
     user_return = {
       user: @user,
       avatar: ""
@@ -78,9 +80,6 @@ class UsersController < ApplicationController
       user_return["avatar"] = Cloudinary::Utils.cloudinary_url(@user.avatar.key)
     end
 
-
-    @user.update(update_params)
-    
     render :json => user_return, :status => 200
   end
 
