@@ -15,7 +15,22 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    render :json => @user
+    @how_many_user_is_following = @user.followed_follows.count
+    @how_many_followers_user_has = @user.follower_follows.count
+    
+    @following = Follow.where(["follower_id = ? AND followed_id = ?", params["dbUserId"].to_i, params[:id].to_i])
+    @isFollowing = false
+    @follow_id = nil
+    
+    if !@following.empty? 
+      @isFollowing = true
+      @follow_id = @following[0][:id]
+    end
+    
+    puts "$$$$$$$$ #{@following.inspect} $$$$$$$$$$$$"
+
+    @returnObj = {user: @user, how_many_user_is_following: @how_many_user_is_following, how_many_followers_user_has: @how_many_followers_user_has, isFollowing: @isFollowing, follow_id: @follow_id}
+    render :json => @returnObj
   end
 
   private
