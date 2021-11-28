@@ -36,7 +36,7 @@ class PostsController < ApplicationController
     @thumbnails = {}
     @posts.each { |post| 
       if post.thumbnail.attached?
-        @thumbnails[post[:id]] = url_for(post&.thumbnail)
+        @thumbnails[post[:id]] = Cloudinary::Utils.cloudinary_url(post.thumbnail.key)
       end
     }
     
@@ -45,14 +45,25 @@ class PostsController < ApplicationController
     render :json => @returnObj
   end
 
-  def create   
-    @post = Post.new(post_params)
+  def create
 
+    
+    @post = Post.new(post_params)
+    puts "&&&&&&&&&&&&&&&&&&&&&&&&&", cl_image_path(@post.thumbnail.key)
+
+    @tag = cl_image_tag("#{@post.thumbnail.key}", :transformation=>[
+      {:width=>350, :crop=>"scale"},
+      {:fetch_format=>:auto}
+      ])
+    
+    puts "######################", @tag
+
+    
     if @post.save!
       payload = {
-        file: url_for(@post.upload_file),
+        file: Cloudinary::Utils.cloudinary_url(@post.upload_file.key),
         content: @post.content_type_upload_file, 
-        thumbnail_file: url_for(@post.thumbnail),
+        thumbnail_file: Cloudinary::Utils.cloudinary_url(@post.thumbnail.key),
         thumbnail_content: @post.content_type_thumbnail
       }
       render :json => payload, :status => 200
@@ -85,10 +96,9 @@ class PostsController < ApplicationController
     }
 
     if @post.upload_file.attached? 
-      @file["upload_file"] = url_for(@post.upload_file)
+      @file["upload_file"] = Cloudinary::Utils.cloudinary_url(@post.upload_file.key)
       @file["content"] = @post.content_type_upload_file
     end
-       
     
     @returnObj = {comments: @comments, post: @post, likes: @likes, postUserInfo: @postUserInfo, commentInfo: @commentInfo, file: @file}
     render :json => @returnObj

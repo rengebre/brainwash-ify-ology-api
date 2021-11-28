@@ -15,7 +15,7 @@ class UsersController < ApplicationController
     }
 
     if @user.avatar.attached?
-      user_return["avatar"] = url_for(@user.avatar)
+      user_return["avatar"] = Cloudinary::Utils.cloudinary_url(@user.avatar.key)
     end
 
     render :json => user_return, :status => 200
@@ -45,7 +45,7 @@ class UsersController < ApplicationController
     }
 
     if @user.avatar.attached?
-      user_return["avatar"] = url_for(@user.avatar)
+      user_return["avatar"] = Cloudinary::Utils.cloudinary_url(@user.avatar.key)
     end
 
     render :json => user_return, :status => 200
@@ -75,7 +75,7 @@ class UsersController < ApplicationController
     }
 
     if @user.avatar.attached?
-      user_return["avatar"] = url_for(@user.avatar)
+      user_return["avatar"] = Cloudinary::Utils.cloudinary_url(@user.avatar.key)
     end
 
 
