@@ -23,10 +23,25 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @how_many_user_is_following = @user.followed_follows.count
+    @how_many_followers_user_has = @user.follower_follows.count
+    
+    @following = Follow.where(["follower_id = ? AND followed_id = ?", params["dbUserId"].to_i, params[:id].to_i])
+    @isFollowing = false
+    @follow_id = nil
+    
+    if !@following.empty? 
+      @isFollowing = true
+      @follow_id = @following[0][:id]
+    end
     
     user_return = {
       user: @user,
-      avatar: ""
+      avatar: "",
+      how_many_user_is_following: @how_many_user_is_following,
+      how_many_followers_user_has: @how_many_followers_user_has,
+      isFollowing: @isFollowing,
+      follow_id: @follow_id
     }
 
     if @user.avatar.attached?
@@ -38,7 +53,6 @@ class UsersController < ApplicationController
 
   def update
     update_params = user_update_params
-
     
     @user = User.find(update_params[:id])
   
