@@ -1,6 +1,5 @@
 class PostsController < ApplicationController
   def index
-
     filter = JSON.parse(params[:filter])
 
     queryString = ""

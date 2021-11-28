@@ -4,5 +4,5 @@ Rails.application.routes.draw do
   resources :interests, only: [:index]
   resources :comments, only: [:create, :destroy]
   resources :likes, only: [:create, :destroy]
-  resources :users, only: [:index, :create, :show]
+  resources :users, only: [:index, :create, :show, :update]
 end
