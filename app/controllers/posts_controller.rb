@@ -46,30 +46,47 @@ class PostsController < ApplicationController
   end
 
   def create
+    post_db_params = post_params
+    thumbnail = false
+    upload_file = false
 
-    
-    @post = Post.new(post_params)
-    puts "&&&&&&&&&&&&&&&&&&&&&&&&&", cl_image_path(@post.thumbnail.key)
+    if post_db_params["thumbnail"]
+      thumbnail = post_db_params["thumbnail"]
+      post_db_params.delete("thumbnail")
+    end
 
-    @tag = cl_image_tag("#{@post.thumbnail.key}", :transformation=>[
-      {:width=>350, :crop=>"scale"},
-      {:fetch_format=>:auto}
-      ])
-    
-    puts "######################", @tag
+    if post_db_params["upload_file"]
+      upload_file = post_db_params["upload_file"]
+      post_db_params.delete("upload_file") 
+    end
 
+
+    @post = Post.new(post_db_params)
     
-    if @post.save!
+    @post.save!
+
+      if thumbnail
+        @post.thumbnail.attach(thumbnail)
+      end
+
+      if upload_file
+        @post.upload_file.attach(upload_file)
+      end
+
+      # @post = Post.find(4)
+
+      # puts "&&&&&&&&&&&&&&&&&&&&&&&&&", Cloudinary::Utils.cloudinary_url(@post.thumbnail.key, folder: "brainwash")
+    
       payload = {
-        file: Cloudinary::Utils.cloudinary_url(@post.upload_file.key),
+        file: Cloudinary::Utils.cloudinary_url(@post.upload_file.key, :resource_type => "video"),
         content: @post.content_type_upload_file, 
         thumbnail_file: Cloudinary::Utils.cloudinary_url(@post.thumbnail.key),
         thumbnail_content: @post.content_type_thumbnail
       }
       render :json => payload, :status => 200
-    else 
-      render :json => {error: "you baaaad"}, :status => 400
-    end
+    # else 
+    #   render :json => {error: "you baaaad"}, :status => 400
+    # end
   end
 
 
@@ -95,8 +112,10 @@ class PostsController < ApplicationController
       content: ""
     }
 
+    options = {}
+
     if @post.upload_file.attached? 
-      @file["upload_file"] = Cloudinary::Utils.cloudinary_url(@post.upload_file.key)
+      @file["upload_file"] = Cloudinary::Utils.cloudinary_url(@post.upload_file.key, :resource_type => "video")
       @file["content"] = @post.content_type_upload_file
     end
     
