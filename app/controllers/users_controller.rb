@@ -15,7 +15,7 @@ class UsersController < ApplicationController
     }
 
     if @user.avatar.attached?
-      user_return["avatar"] = url_for(@user.avatar)
+      user_return["avatar"] = Cloudinary::Utils.cloudinary_url(@user.avatar.key)
     end
 
     render :json => user_return, :status => 200
@@ -45,7 +45,7 @@ class UsersController < ApplicationController
     }
 
     if @user.avatar.attached?
-      user_return["avatar"] = url_for(@user.avatar)
+      user_return["avatar"] = Cloudinary::Utils.cloudinary_url(@user.avatar.key)
     end
 
     render :json => user_return, :status => 200
@@ -69,18 +69,17 @@ class UsersController < ApplicationController
       update_params.delete("avatar")
     end
 
+    @user.update(update_params)
+
     user_return = {
       user: @user,
       avatar: ""
     }
 
     if @user.avatar.attached?
-      user_return["avatar"] = url_for(@user.avatar)
+      user_return["avatar"] = Cloudinary::Utils.cloudinary_url(@user.avatar.key)
     end
 
-
-    @user.update(update_params)
-    
     render :json => user_return, :status => 200
   end
 

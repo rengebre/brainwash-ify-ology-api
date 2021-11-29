@@ -36,7 +36,7 @@ class PostsController < ApplicationController
     @thumbnails = {}
     @posts.each { |post| 
       if post.thumbnail.attached?
-        @thumbnails[post[:id]] = url_for(post&.thumbnail)
+        @thumbnails[post[:id]] = Cloudinary::Utils.cloudinary_url(post.thumbnail.key)
       end
     }
     
@@ -45,20 +45,48 @@ class PostsController < ApplicationController
     render :json => @returnObj
   end
 
-  def create   
-    @post = Post.new(post_params)
+  def create
+    post_db_params = post_params
+    thumbnail = false
+    upload_file = false
 
-    if @post.save!
+    if post_db_params["thumbnail"]
+      thumbnail = post_db_params["thumbnail"]
+      post_db_params.delete("thumbnail")
+    end
+
+    if post_db_params["upload_file"]
+      upload_file = post_db_params["upload_file"]
+      post_db_params.delete("upload_file") 
+    end
+
+
+    @post = Post.new(post_db_params)
+    
+    @post.save!
+
+      if thumbnail
+        @post.thumbnail.attach(thumbnail)
+      end
+
+      if upload_file
+        @post.upload_file.attach(upload_file)
+      end
+
+      # @post = Post.find(4)
+
+      # puts "&&&&&&&&&&&&&&&&&&&&&&&&&", Cloudinary::Utils.cloudinary_url(@post.thumbnail.key, folder: "brainwash")
+    
       payload = {
-        file: url_for(@post.upload_file),
+        file: Cloudinary::Utils.cloudinary_url(@post.upload_file.key, :resource_type => "video"),
         content: @post.content_type_upload_file, 
-        thumbnail_file: url_for(@post.thumbnail),
+        thumbnail_file: Cloudinary::Utils.cloudinary_url(@post.thumbnail.key),
         thumbnail_content: @post.content_type_thumbnail
       }
       render :json => payload, :status => 200
-    else 
-      render :json => {error: "you baaaad"}, :status => 400
-    end
+    # else 
+    #   render :json => {error: "you baaaad"}, :status => 400
+    # end
   end
 
 
@@ -84,11 +112,12 @@ class PostsController < ApplicationController
       content: ""
     }
 
+    options = {}
+
     if @post.upload_file.attached? 
-      @file["upload_file"] = url_for(@post.upload_file)
+      @file["upload_file"] = Cloudinary::Utils.cloudinary_url(@post.upload_file.key, :resource_type => "video")
       @file["content"] = @post.content_type_upload_file
     end
-       
     
     @returnObj = {comments: @comments, post: @post, likes: @likes, postUserInfo: @postUserInfo, commentInfo: @commentInfo, file: @file}
     render :json => @returnObj
