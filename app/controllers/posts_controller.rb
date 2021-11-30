@@ -81,12 +81,6 @@ class PostsController < ApplicationController
       payload["content"] = @post.content_type_upload_file
     end
   
-    # payload = {
-    #   file: Cloudinary::Utils.cloudinary_url(@post.upload_file.key, :resource_type => "video"),
-    #   content: @post.content_type_upload_file, 
-    #   thumbnail_file: Cloudinary::Utils.cloudinary_url(@post.thumbnail.key),
-    #   thumbnail_content: @post.content_type_thumbnail
-    # }
     render :json => payload, :status => 200
   end
 
