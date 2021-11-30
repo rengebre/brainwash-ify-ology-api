@@ -123,8 +123,13 @@ post_list = [
 ]
 
 # # Posts.destroy_all
+i = 0
+post_list.each { |post| 
+  i += 1
+  @post = Post.create!(post) 
+  @post.thumbnail.attach(io: File.open("/vagrant/final-project/brainwash-ify-ology-api/db/seed-images/image#{i}.png"), filename:"image#{i}.png")
+}
 
-post_list.each { |post| Post.create!(post) }
 
 ###### LIKES ######
 
