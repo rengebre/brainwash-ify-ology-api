@@ -65,28 +65,29 @@ class PostsController < ApplicationController
     
     @post.save!
 
-      if thumbnail
-        @post.thumbnail.attach(thumbnail)
-      end
+    payload = {
+      "post" => @post
+    }
 
-      if upload_file
-        @post.upload_file.attach(upload_file)
-      end
+    if thumbnail
+      @post.thumbnail.attach(thumbnail)
+      payload["thumbnail_file"] = Cloudinary::Utils.cloudinary_url(@post.thumbnail.key)
+      payload["thumbnail_content"] = @post.content_type_thumbnail
+    end
 
-      # @post = Post.find(4)
-
-      # puts "&&&&&&&&&&&&&&&&&&&&&&&&&", Cloudinary::Utils.cloudinary_url(@post.thumbnail.key, folder: "brainwash")
-    
-      payload = {
-        file: Cloudinary::Utils.cloudinary_url(@post.upload_file.key, :resource_type => "video"),
-        content: @post.content_type_upload_file, 
-        thumbnail_file: Cloudinary::Utils.cloudinary_url(@post.thumbnail.key),
-        thumbnail_content: @post.content_type_thumbnail
-      }
-      render :json => payload, :status => 200
-    # else 
-    #   render :json => {error: "you baaaad"}, :status => 400
-    # end
+    if upload_file
+      @post.upload_file.attach(upload_file)
+      payload["file"] = Cloudinary::Utils.cloudinary_url(@post.upload_file.key, :resource_type => "video")
+      payload["content"] = @post.content_type_upload_file
+    end
+  
+    # payload = {
+    #   file: Cloudinary::Utils.cloudinary_url(@post.upload_file.key, :resource_type => "video"),
+    #   content: @post.content_type_upload_file, 
+    #   thumbnail_file: Cloudinary::Utils.cloudinary_url(@post.thumbnail.key),
+    #   thumbnail_content: @post.content_type_thumbnail
+    # }
+    render :json => payload, :status => 200
   end
 
 
