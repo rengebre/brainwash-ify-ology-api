@@ -124,8 +124,15 @@ class PostsController < ApplicationController
 
   def destroy 
     @post = Post.find(params[:id])
+
+    # Delete attachments if they exist
+    @post.upload_file.purge
+    @post.thumbnail.purge
+    
+    # Delete the entry in our db
     @post.destroy
 
+    # {message: "post successfully dEsTroYed"}
     render :json => {message: "post successfully dEsTroYed"}, :status => 202
   end
 
