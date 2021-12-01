@@ -19,6 +19,21 @@ class PostsController < ApplicationController
       queryArray.push @interestId
     end
 
+    if filter["likesFilter"] 
+      puts "I'VE BEEN HIT!! $$$$$$$$$$$$$$"
+      @postIds = Like.where("user_id = ?", filter["likesFilter"]).pluck(:post_id)
+
+
+      # @postIds = @likes.map { |like| like.pluck(:post_id) } 
+
+      if !queryString.empty?
+        queryString += " AND "
+      end
+
+      queryString += "id IN (?)"
+      queryArray.push @postIds
+    end
+
     queryArray.unshift queryString
     
     if queryArray.length > 1
@@ -27,8 +42,9 @@ class PostsController < ApplicationController
       @posts = Post.all.order(updated_at: :desc)
     end
 
+    puts "****************", @posts
     @postCounts = @posts.map { |post| 
-      {"#{post[:id]}": [post.likes.count, post.comments.count]}
+      {"#{post.id}" => [post.likes.count, post.comments.count]}
     }
     
     @users = @posts.map { |post| post.user}
@@ -65,28 +81,23 @@ class PostsController < ApplicationController
     
     @post.save!
 
-      if thumbnail
-        @post.thumbnail.attach(thumbnail)
-      end
+    payload = {
+      "post" => @post
+    }
 
-      if upload_file
-        @post.upload_file.attach(upload_file)
-      end
+    if thumbnail
+      @post.thumbnail.attach(thumbnail)
+      payload["thumbnail_file"] = Cloudinary::Utils.cloudinary_url(@post.thumbnail.key)
+      payload["thumbnail_content"] = @post.content_type_thumbnail
+    end
 
-      # @post = Post.find(4)
-
-      # puts "&&&&&&&&&&&&&&&&&&&&&&&&&", Cloudinary::Utils.cloudinary_url(@post.thumbnail.key, folder: "brainwash")
-    
-      payload = {
-        file: Cloudinary::Utils.cloudinary_url(@post.upload_file.key, :resource_type => "video"),
-        content: @post.content_type_upload_file, 
-        thumbnail_file: Cloudinary::Utils.cloudinary_url(@post.thumbnail.key),
-        thumbnail_content: @post.content_type_thumbnail
-      }
-      render :json => payload, :status => 200
-    # else 
-    #   render :json => {error: "you baaaad"}, :status => 400
-    # end
+    if upload_file
+      @post.upload_file.attach(upload_file)
+      payload["file"] = Cloudinary::Utils.cloudinary_url(@post.upload_file.key, :resource_type => "video")
+      payload["content"] = @post.content_type_upload_file
+    end
+  
+    render :json => payload, :status => 200
   end
 
 
@@ -97,7 +108,8 @@ class PostsController < ApplicationController
 
     @commentInfo = @comments.map { |comment| 
       userInfo = User.find(comment.user_id)
-      {comment: comment, user: userInfo}
+      avatar_url = Cloudinary::Utils.cloudinary_url(userInfo.avatar.key)
+      {comment: comment, user: userInfo, avatar: avatar_url}
     }
  
     @likes = @post.likes
@@ -121,8 +133,6 @@ class PostsController < ApplicationController
     
     @returnObj = {comments: @comments, post: @post, likes: @likes, postUserInfo: @postUserInfo, commentInfo: @commentInfo, file: @file}
     render :json => @returnObj
-
-
   end
 
 

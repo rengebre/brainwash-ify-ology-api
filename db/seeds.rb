@@ -123,8 +123,13 @@ post_list = [
 ]
 
 # # Posts.destroy_all
+i = 0
+post_list.each { |post| 
+  i += 1
+  @post = Post.create!(post) 
+  @post.thumbnail.attach(io: File.open(Rails.root.join("db", "seed-images", "image#{i}.png").to_s), filename:"image#{i}.png")
+}
 
-post_list.each { |post| Post.create!(post) }
 
 ###### LIKES ######
 
