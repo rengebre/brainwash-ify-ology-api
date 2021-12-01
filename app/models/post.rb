@@ -1,8 +1,8 @@
 class Post < ApplicationRecord
   belongs_to :user
   belongs_to :interest
-  has_many :likes
-  has_many :comments
+  has_many :likes, dependent: :destroy
+  has_many :comments, dependent: :destroy
   has_one_attached :upload_file
   has_one_attached :thumbnail
 
