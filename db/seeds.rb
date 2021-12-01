@@ -46,13 +46,67 @@ user_list.each {|user|
 
 interest_list = [
   {
+    name: 'Arts & Entertainment'
+  },
+  {
+    name: 'Baking'
+  },
+  {
+    name: 'Beauty'
+  },
+  {
+    name: 'Business'
+  },
+  {
     name: 'Cooking'
+  },
+  {
+    name: 'Design'
+  },
+  {
+    name: 'DIY'
+  },
+  {
+    name: 'Fashion'
+  },
+  {
+    name: 'Finance'
+  },
+  {
+    name: 'Fitness'
+  },
+  {
+    name: 'Gardening'
+  },
+  {
+    name: 'Gaming'
+  },
+  {
+    name: 'Health & Wellness'
   },
   {
     name: 'Home Improvements'
   },
   {
-    name: 'Gardening'
+    name: 'Home & Lifestyle'
+  },
+  {
+    name: 'Politics'
+  },
+  {
+    name: 'Software Development'
+  },
+  {
+    name: 'Sports'
+  },
+  {
+    name: 'Science & Tech'
+  },
+  {
+    name: 'Travel'
+  },
+  {
+    name: 'Writing & Literature'
   }
 ]
 
