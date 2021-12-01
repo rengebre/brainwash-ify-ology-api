@@ -116,115 +116,115 @@ interest_list.each { |interest| Interest.create!(interest) }
 
 ####### USER_INTERESTS #######
 
-user_interest_list = [
-  {
-    user_id: 1,
-    interest_id: 1
-  },
-  {
-    user_id: 2,
-    interest_id: 2
-  },
-  {
-    user_id: 3,
-    interest_id: 3
-  },
-  {
-    user_id: 1,
-    interest_id: 3
-  },
-  {
-    user_id: 2,
-    interest_id: 2
-  },
-  {
-    user_id: 3,
-    interest_id: 1
-  }
-]
+# user_interest_list = [
+#   {
+#     user_id: 1,
+#     interest_id: 1
+#   },
+#   {
+#     user_id: 2,
+#     interest_id: 2
+#   },
+#   {
+#     user_id: 3,
+#     interest_id: 3
+#   },
+#   {
+#     user_id: 1,
+#     interest_id: 3
+#   },
+#   {
+#     user_id: 2,
+#     interest_id: 2
+#   },
+#   {
+#     user_id: 3,
+#     interest_id: 1
+#   }
+# ]
 
-# UserInterest.destroy_all
+# # UserInterest.destroy_all
 
-user_interest_list.each { |user_interest| UserInterest.create!(user_interest) }
+# user_interest_list.each { |user_interest| UserInterest.create!(user_interest) }
 
-####### POSTS #######
+# ####### POSTS #######
 
-post_list = [
-  {
-    title: "How to cook a sweet potato",
-    description: "Watch me cook this huge sweet potato, she is so sweet",
-    # upload_file: "https://video-images.vice.com/articles/5a4d3c2c195444648780c02a/lede/1515013133112-Screen-Shot-2018-01-03-at-35241-PM.png?crop=0.9197530864197531xw:1xh;center,center&resize=1200:*",
-    post_type: "video",
-    user_id: 1,
-    interest_id: 1
-  },
-  {
-    title: "How to tear out your nasty carpets",
-    description: "Let me walk you through the best way to rip out your old carpets to reveal the beautiful hardwood",
-    # upload_file: "https://www.thespruce.com/thmb/suvSBIM8DxtFvsWYkOtB64BefuY=/1885x1414/smart/filters:no_upscale()/RemovingCarpet-6a4a6a6f78df40d8a11439e6a83ec866.jpg",
-    post_type: "video",
-    user_id: 2,
-    interest_id: 2
-  },
-  {
-    title: "How to revive an aloe plant",
-    description: "Everything you need to know about keeping your precious aloe bbs alive and juicy",
-    # upload_file: "https://i.ytimg.com/vi/kHsQYCM_sQs/maxresdefault.jpg",
-    post_type: "video",
-    user_id: 3,
-    interest_id: 3
-  }
-]
+# post_list = [
+#   {
+#     title: "How to cook a sweet potato",
+#     description: "Watch me cook this huge sweet potato, she is so sweet",
+#     # upload_file: "https://video-images.vice.com/articles/5a4d3c2c195444648780c02a/lede/1515013133112-Screen-Shot-2018-01-03-at-35241-PM.png?crop=0.9197530864197531xw:1xh;center,center&resize=1200:*",
+#     post_type: "video",
+#     user_id: 1,
+#     interest_id: 1
+#   },
+#   {
+#     title: "How to tear out your nasty carpets",
+#     description: "Let me walk you through the best way to rip out your old carpets to reveal the beautiful hardwood",
+#     # upload_file: "https://www.thespruce.com/thmb/suvSBIM8DxtFvsWYkOtB64BefuY=/1885x1414/smart/filters:no_upscale()/RemovingCarpet-6a4a6a6f78df40d8a11439e6a83ec866.jpg",
+#     post_type: "video",
+#     user_id: 2,
+#     interest_id: 2
+#   },
+#   {
+#     title: "How to revive an aloe plant",
+#     description: "Everything you need to know about keeping your precious aloe bbs alive and juicy",
+#     # upload_file: "https://i.ytimg.com/vi/kHsQYCM_sQs/maxresdefault.jpg",
+#     post_type: "video",
+#     user_id: 3,
+#     interest_id: 3
+#   }
+# ]
 
-# # Posts.destroy_all
-i = 0
-post_list.each { |post| 
-  i += 1
-  @post = Post.create!(post) 
-  @post.thumbnail.attach(io: File.open(Rails.root.join("db", "seed-images", "image#{i}.png").to_s), filename:"image#{i}.png")
-}
+# # # Posts.destroy_all
+# i = 0
+# post_list.each { |post| 
+#   i += 1
+#   @post = Post.create!(post) 
+#   @post.thumbnail.attach(io: File.open(Rails.root.join("db", "seed-images", "image#{i}.png").to_s), filename:"image#{i}.png")
+# }
 
 
-###### LIKES ######
+# ###### LIKES ######
 
-likes_list = [
-  {
-    user_id: 1,
-    post_id: 2
-  },
-  {
-    user_id: 2,
-    post_id: 3
-  },
-  {
-    user_id: 3,
-    post_id: 1
-  }
-]
+# likes_list = [
+#   {
+#     user_id: 1,
+#     post_id: 2
+#   },
+#   {
+#     user_id: 2,
+#     post_id: 3
+#   },
+#   {
+#     user_id: 3,
+#     post_id: 1
+#   }
+# ]
 
-likes_list.each { |like| Like.create!(like)}
+# likes_list.each { |like| Like.create!(like)}
 
-###### COMMENTS ######
+# ###### COMMENTS ######
 
-comments_list = [
-  {
-    content: 'love this vid, thanks for sharing!!',
-    user_id: 1,
-    post_id: 2
-  },
-  {
-    content: 'learned so much, vid was sweeeet',
-    user_id: 2,
-    post_id: 3
-  },
-  {
-    content: '5 stars, would watch again!',
-    user_id: 3,
-    post_id: 1
-  }
-]
+# comments_list = [
+#   {
+#     content: 'love this vid, thanks for sharing!!',
+#     user_id: 1,
+#     post_id: 2
+#   },
+#   {
+#     content: 'learned so much, vid was sweeeet',
+#     user_id: 2,
+#     post_id: 3
+#   },
+#   {
+#     content: '5 stars, would watch again!',
+#     user_id: 3,
+#     post_id: 1
+#   }
+# ]
 
-comments_list.each { |comment| Comment.create!(comment) }
+# comments_list.each { |comment| Comment.create!(comment) }
 
 ###### FOLLOWS ######
 
