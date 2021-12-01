@@ -19,6 +19,21 @@ class PostsController < ApplicationController
       queryArray.push @interestId
     end
 
+    if filter["likesFilter"] 
+      puts "I'VE BEEN HIT!! $$$$$$$$$$$$$$"
+      @postIds = Like.where("user_id = ?", filter["likesFilter"]).pluck(:post_id)
+
+
+      # @postIds = @likes.map { |like| like.pluck(:post_id) } 
+
+      if !queryString.empty?
+        queryString += " AND "
+      end
+
+      queryString += "id IN (?)"
+      queryArray.push @postIds
+    end
+
     queryArray.unshift queryString
     
     if queryArray.length > 1
@@ -27,8 +42,9 @@ class PostsController < ApplicationController
       @posts = Post.all.order(updated_at: :desc)
     end
 
+    puts "****************", @posts
     @postCounts = @posts.map { |post| 
-      {"#{post[:id]}": [post.likes.count, post.comments.count]}
+      {"#{post.id}" => [post.likes.count, post.comments.count]}
     }
     
     @users = @posts.map { |post| post.user}
