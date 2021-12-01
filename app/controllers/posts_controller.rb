@@ -108,7 +108,8 @@ class PostsController < ApplicationController
 
     @commentInfo = @comments.map { |comment| 
       userInfo = User.find(comment.user_id)
-      {comment: comment, user: userInfo}
+      avatar_url = Cloudinary::Utils.cloudinary_url(userInfo.avatar.key)
+      {comment: comment, user: userInfo, avatar: avatar_url}
     }
  
     @likes = @post.likes
@@ -132,8 +133,6 @@ class PostsController < ApplicationController
     
     @returnObj = {comments: @comments, post: @post, likes: @likes, postUserInfo: @postUserInfo, commentInfo: @commentInfo, file: @file}
     render :json => @returnObj
-
-
   end
 
 
