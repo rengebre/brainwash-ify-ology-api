@@ -42,9 +42,13 @@ class PostsController < ApplicationController
       @posts = Post.all.order(updated_at: :desc)
     end
 
-    puts "****************", @posts
     @postCounts = @posts.map { |post| 
       {"#{post.id}" => [post.likes.count, post.comments.count]}
+    }
+    
+    @likes = {}
+    @posts.each { |post|
+      @likes["#{post.id}"] = post.likes
     }
     
     @users = @posts.map { |post| post.user}
@@ -56,8 +60,7 @@ class PostsController < ApplicationController
       end
     }
     
-    @returnObj = { posts: @posts, users: @users, postCounts: @postCounts, thumbnails: @thumbnails }
-
+    @returnObj = { posts: @posts, users: @users, postCounts: @postCounts, thumbnails: @thumbnails, likes: @likes }
     render :json => @returnObj
   end
 
